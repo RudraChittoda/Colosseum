@@ -90,3 +90,14 @@ function displayRepos(repos) {
     </div>
   `).join("");
 }
+const token = "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";
+
+fetch(`https://api.github.com/users/${username}`, {
+  headers: {
+    Authorization: `token ${token}`
+  }
+})
+.then(res => res.json())
+.then(data => {
+  console.log(data);
+});
