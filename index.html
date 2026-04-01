@@ -1,0 +1,1269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Colosseum — Prove Your Worth. Claim Glory.</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --gold: #C9933A;
+    --gold-light: #E8B96A;
+    --gold-dim: #7A5520;
+    --blood: #8B1A1A;
+    --blood-light: #C0392B;
+    --bg: #0A0805;
+    --bg2: #110E08;
+    --bg3: #1A1510;
+    --surface: #1E1912;
+    --border: rgba(201,147,58,0.18);
+    --border-strong: rgba(201,147,58,0.4);
+    --text: #F0E8D8;
+    --text-muted: #9A8E78;
+    --text-dim: #5A5040;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    background: rgba(10,8,5,0.85);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+  }
+  .nav-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+    color: var(--gold);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex; align-items: center; gap: 2rem;
+    list-style: none;
+  }
+  .nav-links a {
+    color: var(--text-muted);
+    text-decoration: none;
+    font-size: 0.88rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--gold-light); }
+  .nav-cta {
+    background: transparent;
+    border: 1px solid var(--gold-dim);
+    color: var(--gold);
+    padding: 0.5rem 1.4rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-transform: uppercase;
+  }
+  .nav-cta:hover {
+    background: var(--gold);
+    color: var(--bg);
+    border-color: var(--gold);
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 7rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-arch {
+    position: absolute;
+    top: 0; left: 50%; transform: translateX(-50%);
+    width: 900px; height: 700px;
+    pointer-events: none;
+    opacity: 0.07;
+  }
+  .hero-glow {
+    position: absolute;
+    top: 30%; left: 50%; transform: translate(-50%, -50%);
+    width: 600px; height: 300px;
+    background: radial-gradient(ellipse at center, rgba(201,147,58,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border-strong);
+    padding: 0.35rem 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  .badge-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--gold);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.7); }
+  }
+  .hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(3.5rem, 9vw, 7.5rem);
+    font-weight: 900;
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+    position: relative;
+  }
+  .h1-gold { color: var(--gold); }
+  .h1-white { color: var(--text); }
+  .hero-sub-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(0.9rem, 2.5vw, 1.3rem);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    margin-bottom: 1.8rem;
+  }
+  .hero-desc {
+    font-size: 1.05rem;
+    color: var(--text-muted);
+    max-width: 520px;
+    line-height: 1.7;
+    margin-bottom: 2.8rem;
+    font-weight: 300;
+  }
+  .hero-actions {
+    display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center;
+  }
+  .btn-primary {
+    background: var(--gold);
+    color: var(--bg);
+    border: none;
+    padding: 0.85rem 2.2rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s;
+    clip-path: polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%);
+  }
+  .btn-primary:hover {
+    background: var(--gold-light);
+    transform: translateY(-2px);
+  }
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border);
+    padding: 0.85rem 2.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.25s;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .btn-ghost:hover {
+    border-color: var(--border-strong);
+    color: var(--text);
+  }
+  .hero-divider {
+    width: 120px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    margin: 3.5rem auto 0;
+  }
+  .hero-stats {
+    display: flex; gap: 3rem; margin-top: 2.5rem;
+    justify-content: center;
+  }
+  .stat { text-align: center; }
+  .stat-num {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .stat-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+
+  /* ─── SECTIONS SHARED ─── */
+  section { padding: 6rem 2rem; max-width: 1100px; margin: 0 auto; }
+  .section-tag {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    color: var(--gold-dim);
+    margin-bottom: 0.8rem;
+    display: flex; align-items: center; gap: 10px;
+    justify-content: center;
+  }
+  .section-tag::before, .section-tag::after {
+    content: '';
+    flex: 0 0 30px; height: 1px;
+    background: var(--gold-dim);
+  }
+  .section-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    font-weight: 700;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .section-title span { color: var(--gold); }
+  .section-desc {
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 1rem;
+    max-width: 480px;
+    margin: 0 auto 3.5rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* ─── FEATURES ─── */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5px;
+    background: var(--border);
+  }
+  .feature-card {
+    background: var(--bg2);
+    padding: 2.2rem 2rem;
+    transition: background 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+  .feature-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold-dim), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .feature-card:hover { background: var(--bg3); }
+  .feature-card:hover::before { opacity: 1; }
+  .feature-icon {
+    width: 44px; height: 44px;
+    margin-bottom: 1.2rem;
+    display: flex; align-items: center; justify-content: center;
+    border: 1px solid var(--border);
+    color: var(--gold);
+  }
+  .feature-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .feature-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.65;
+    font-weight: 300;
+  }
+
+  /* ─── GITHUB SECTION ─── */
+  .github-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 5rem 2rem;
+  }
+  .github-inner { max-width: 1100px; margin: 0 auto; }
+  .github-demo {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    align-items: start; margin-top: 3rem;
+  }
+  .github-search-panel, .github-stats-panel {
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 1.8rem;
+  }
+  .panel-label {
+    font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.15em;
+    color: var(--gold-dim); margin-bottom: 1rem;
+  }
+  .search-row { display: flex; gap: 8px; }
+  .gh-input {
+    flex: 1;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 0.6rem 1rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .gh-input:focus { border-color: var(--gold-dim); }
+  .gh-input::placeholder { color: var(--text-dim); }
+  .gh-btn {
+    background: var(--gold);
+    border: none;
+    color: var(--bg);
+    padding: 0.6rem 1.2rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: background 0.2s;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .gh-btn:hover { background: var(--gold-light); }
+  .gh-result {
+    margin-top: 1.2rem;
+    min-height: 80px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .gh-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1rem;
+    display: flex; align-items: center; gap: 12px;
+    cursor: pointer;
+    transition: border-color 0.2s;
+    text-decoration: none;
+  }
+  .gh-card:hover { border-color: var(--gold-dim); }
+  .gh-avatar-sm {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+    background: var(--bg3);
+  }
+  .gh-info { flex: 1; min-width: 0; }
+  .gh-name-sm {
+    font-size: 0.92rem;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .gh-meta-sm {
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    margin-top: 2px;
+  }
+  .gh-repos-sm {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    color: var(--gold-dim);
+    white-space: nowrap;
+  }
+  .gh-message {
+    display: flex; align-items: center; justify-content: center;
+    height: 80px;
+    color: var(--text-dim);
+    font-size: 0.82rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .gh-error {
+    color: var(--blood-light);
+    font-size: 0.82rem;
+    padding: 0.8rem;
+    border: 1px solid rgba(192,57,43,0.3);
+    background: rgba(139,26,26,0.15);
+  }
+  .placeholder-msg {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; height: 220px;
+    color: var(--text-dim);
+    font-size: 0.82rem; text-align: center; gap: 10px;
+    text-transform: uppercase; letter-spacing: 0.1em;
+  }
+  .profile-header {
+    display: flex; align-items: center; gap: 1rem;
+    margin-bottom: 1.4rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .profile-avatar-big {
+    width: 56px; height: 56px; border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--gold-dim);
+    flex-shrink: 0;
+  }
+  .profile-name { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--text); }
+  .profile-bio { font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; }
+  .stat-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  }
+  .stat-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 0.9rem;
+    text-align: center;
+  }
+  .stat-box-num {
+    font-family: 'Cinzel', serif;
+    font-size: 1.5rem;
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .stat-box-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-dim);
+    margin-top: 3px;
+  }
+  .lang-section { margin-top: 1.4rem; }
+  .lang-section-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold-dim);
+    margin-bottom: 10px;
+  }
+  .lang-bar { margin-bottom: 10px; }
+  .lang-bar-label {
+    display: flex; justify-content: space-between;
+    font-size: 0.75rem; color: var(--text-muted);
+    margin-bottom: 5px;
+  }
+  .lang-bar-track {
+    height: 4px; background: var(--surface);
+    border-radius: 2px; overflow: hidden;
+  }
+  .lang-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dim), var(--gold));
+    border-radius: 2px;
+    transition: width 0.8s ease;
+  }
+  .repos-section { margin-top: 1.4rem; }
+  .repos-section-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--gold-dim);
+    margin-bottom: 10px;
+  }
+  .repo-item {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.82rem;
+    gap: 8px;
+  }
+  .repo-item:last-child { border-bottom: none; }
+  .repo-name {
+    color: var(--gold-light);
+    text-decoration: none;
+    font-weight: 500;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    max-width: 160px;
+  }
+  .repo-name:hover { text-decoration: underline; }
+  .repo-stars {
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  /* ─── COMPETITIONS ─── */
+  .competitions-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 1px;
+    background: var(--border);
+  }
+  .comp-card {
+    background: var(--bg2);
+    padding: 2rem;
+    position: relative;
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+  .comp-card:hover { background: var(--bg3); }
+  .comp-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    padding: 0.25rem 0.7rem;
+    margin-bottom: 1rem;
+    font-weight: 500;
+  }
+  .badge-live { background: rgba(139,26,26,0.3); color: #E57373; border: 1px solid rgba(139,26,26,0.5); }
+  .badge-upcoming { background: rgba(201,147,58,0.15); color: var(--gold); border: 1px solid var(--gold-dim); }
+  .badge-open { background: rgba(30,80,40,0.3); color: #66BB6A; border: 1px solid rgba(30,80,40,0.6); }
+  .comp-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem;
+    color: var(--text);
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+    padding-right: 4rem;
+  }
+  .comp-org { font-size: 0.8rem; color: var(--text-dim); margin-bottom: 1.2rem; }
+  .comp-meta {
+    display: flex; gap: 1.2rem; flex-wrap: wrap;
+    font-size: 0.78rem; color: var(--text-muted);
+  }
+  .comp-meta-item { display: flex; align-items: center; gap: 5px; }
+  .comp-prize {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem;
+    color: var(--gold);
+  }
+
+  /* ─── LEADERBOARD ─── */
+  .leaderboard-section {
+    background: var(--bg2);
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 5rem 2rem;
+  }
+  .leaderboard-inner { max-width: 700px; margin: 0 auto; }
+  .lb-table { width: 100%; border-collapse: collapse; margin-top: 2rem; }
+  .lb-table th {
+    font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--gold-dim); padding: 0.6rem 1rem; text-align: left;
+    border-bottom: 1px solid var(--border);
+    font-weight: 400;
+  }
+  .lb-table td {
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.88rem;
+    color: var(--text-muted);
+  }
+  .lb-table tr:last-child td { border-bottom: none; }
+  .lb-table tr:hover td { background: var(--bg3); }
+  .lb-rank {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--text-dim);
+    font-weight: 700;
+    width: 40px;
+  }
+  .lb-rank.gold { color: var(--gold); }
+  .lb-rank.silver { color: #A8A8B8; }
+  .lb-rank.bronze { color: #C4814A; }
+  .lb-user { display: flex; align-items: center; gap: 10px; }
+  .lb-avatar {
+    width: 30px; height: 30px; border-radius: 50%;
+    object-fit: cover;
+    border: 1px solid var(--border);
+    flex-shrink: 0;
+    background: var(--surface);
+  }
+  .lb-username { color: var(--text); font-weight: 500; }
+  .lb-college { font-size: 0.75rem; color: var(--text-dim); }
+  .lb-power {
+    font-family: 'Cinzel', serif;
+    color: var(--gold);
+    font-size: 0.95rem;
+    text-align: right;
+  }
+  .lb-wins { text-align: center; }
+
+  /* ─── CTA ─── */
+  .cta-section {
+    text-align: center;
+    padding: 7rem 2rem;
+    position: relative;
+  }
+  .cta-inner {
+    max-width: 640px; margin: 0 auto;
+    border: 1px solid var(--border);
+    padding: 4rem 3rem;
+    background: var(--bg2);
+    position: relative;
+  }
+  .cta-corner {
+    position: absolute; width: 18px; height: 18px;
+    border-color: var(--gold-dim); border-style: solid;
+  }
+  .cta-corner.tl { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+  .cta-corner.tr { top: -1px; right: -1px; border-width: 2px 2px 0 0; }
+  .cta-corner.bl { bottom: -1px; left: -1px; border-width: 0 0 2px 2px; }
+  .cta-corner.br { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
+  .cta-title {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.6rem, 4vw, 2.4rem);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 1rem;
+  }
+  .cta-title span { color: var(--gold); }
+  .cta-desc {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    line-height: 1.7;
+    font-weight: 300;
+    margin-bottom: 2rem;
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1rem;
+    background: var(--bg);
+  }
+  .footer-logo {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--gold-dim);
+    letter-spacing: 0.12em;
+  }
+  .footer-copy { font-size: 0.78rem; color: var(--text-dim); letter-spacing: 0.05em; }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a {
+    font-size: 0.78rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--gold); }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 1rem 1.2rem; }
+    .nav-links { display: none; }
+    .github-demo { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.5rem; flex-wrap: wrap; }
+    section { padding: 4rem 1.2rem; }
+    .cta-inner { padding: 2.5rem 1.5rem; }
+    footer { flex-direction: column; align-items: flex-start; }
+    .competitions-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAV
+═══════════════════════════════════════════ -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 18 Q2 6 12 4 Q22 6 22 18" stroke="#C9933A" stroke-width="1.5" fill="none"/>
+      <path d="M5 18 Q5 9 12 7 Q19 9 19 18" stroke="#C9933A" stroke-width="1" fill="none" opacity="0.5"/>
+      <rect x="1" y="17.5" width="22" height="2" fill="#C9933A"/>
+      <line x1="12" y1="4" x2="12" y2="18" stroke="#C9933A" stroke-width="1"/>
+      <line x1="6.5" y1="5.5" x2="6.5" y2="18" stroke="#C9933A" stroke-width="0.8" opacity="0.6"/>
+      <line x1="17.5" y1="5.5" x2="17.5" y2="18" stroke="#C9933A" stroke-width="0.8" opacity="0.6"/>
+    </svg>
+    Colosseum
+  </a>
+  <ul class="nav-links">
+    <li><a href="#features">Arena</a></li>
+    <li><a href="#competitions">Battles</a></li>
+    <li><a href="#github">GitHub</a></li>
+    <li><a href="#leaderboard">Rankings</a></li>
+    <li><a href="#cta">Join</a></li>
+  </ul>
+  <button class="nav-cta">Enter Arena</button>
+</nav>
+
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-glow"></div>
+  <svg class="hero-arch" viewBox="0 0 900 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <ellipse cx="450" cy="700" rx="400" ry="500" stroke="#C9933A" stroke-width="1.5"/>
+    <ellipse cx="450" cy="700" rx="330" ry="420" stroke="#C9933A" stroke-width="1"/>
+    <ellipse cx="450" cy="700" rx="260" ry="340" stroke="#C9933A" stroke-width="0.6"/>
+    <line x1="50" y1="700" x2="850" y2="700" stroke="#C9933A" stroke-width="1"/>
+    <line x1="450" y1="200" x2="450" y2="700" stroke="#C9933A" stroke-width="0.6"/>
+    <line x1="160" y1="350" x2="740" y2="350" stroke="#C9933A" stroke-width="0.4" opacity="0.5"/>
+  </svg>
+
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    Now open — Season 1 · 2025
+    <span class="badge-dot"></span>
+  </div>
+
+  <h1>
+    <span class="h1-gold">Colos</span><span class="h1-white">seum</span>
+  </h1>
+  <p class="hero-sub-title">Prove your worth. Claim glory.</p>
+  <p class="hero-desc">
+    The ultimate arena for student coders, designers, and builders.
+    Compete in hackathons, quizzes, and open challenges — and let your
+    GitHub define your legend.
+  </p>
+
+  <div class="hero-actions">
+    <button class="btn-primary">Enter the Arena</button>
+    <button class="btn-ghost">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+        <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38
+        0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15
+        -.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51
+        -1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12
+        0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82
+        2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95
+        .29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0
+        16 8c0-4.42-3.58-8-8-8z"/>
+      </svg>
+      Connect GitHub
+    </button>
+  </div>
+
+  <div class="hero-divider"></div>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">12K+</div><div class="stat-label">Gladiators</div></div>
+    <div class="stat"><div class="stat-num">340+</div><div class="stat-label">Battles</div></div>
+    <div class="stat"><div class="stat-num">₹2Cr+</div><div class="stat-label">Prize Pool</div></div>
+    <div class="stat"><div class="stat-num">80+</div><div class="stat-label">Colleges</div></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     FEATURES
+═══════════════════════════════════════════ -->
+<section id="features">
+  <p class="section-tag">The Arena</p>
+  <h2 class="section-title">Built for <span>Champions</span></h2>
+  <p class="section-desc">Everything you need to compete, collaborate, and conquer the academic arena.</p>
+
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#C9933A" stroke-width="1.5">
+          <polygon points="11,2 13.5,8.5 20.5,8.5 15,13 17,20 11,16 5,20 7,13 1.5,8.5 8.5,8.5"/>
+        </svg>
+      </div>
+      <div class="feature-title">Live Hackathons</div>
+      <div class="feature-desc">48-hour gladiatorial coding battles with real-time leaderboards, team formation, and mentor support from industry experts.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#C9933A" stroke-width="1.5">
+          <circle cx="11" cy="11" r="9"/>
+          <path d="M11 6v5l3 3"/>
+        </svg>
+      </div>
+      <div class="feature-title">Timed Quests</div>
+      <div class="feature-desc">Domain-specific quizzes, MCQs, and coding challenges with adaptive difficulty — test your skills across 20+ domains.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#C9933A" stroke-width="1.5">
+          <circle cx="11" cy="8" r="5"/>
+          <path d="M2 20c0-4 4-7 9-7s9 3 9 7"/>
+        </svg>
+      </div>
+      <div class="feature-title">GitHub Reputation</div>
+      <div class="feature-desc">Your GitHub profile powers your Colosseum rank. Repos, contributions, and streaks translate into battle experience points.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#C9933A" stroke-width="1.5">
+          <rect x="2" y="7" width="18" height="13" rx="1"/>
+          <path d="M15 7V5a4 4 0 0 0-8 0v2"/>
+        </svg>
+      </div>
+      <div class="feature-title">Prize Vaults</div>
+      <div class="feature-desc">Win cash rewards, internship fast-tracks, swag, and recognition from top-tier sponsors and recruiting companies.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#C9933A" stroke-width="1.5">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <div class="feature-title">Legion System</div>
+      <div class="feature-desc">Form squads, recruit teammates via skill tags, and build a college legion to dominate inter-institutional championships.</div>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="#C9933A" stroke-width="1.5">
+          <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+        </svg>
+      </div>
+      <div class="feature-title">War Room Analytics</div>
+      <div class="feature-desc">Deep performance dashboards — track your growth, compare with peers, and identify skill gaps across every competition.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     GITHUB LIVE SECTION
+═══════════════════════════════════════════ -->
+<div class="github-section" id="github">
+  <div class="github-inner">
+    <p class="section-tag" style="justify-content:center;">Powered by GitHub API</p>
+    <h2 class="section-title">Your Code is Your <span>Identity</span></h2>
+    <p class="section-desc">Search any GitHub profile and see how their open-source presence translates into Colosseum battle power.</p>
+
+    <div class="github-demo">
+      <!-- Search Panel -->
+      <div class="github-search-panel">
+        <div class="panel-label">Search GitHub Warrior</div>
+        <div class="search-row">
+          <input class="gh-input" id="ghInput" type="text" placeholder="Enter GitHub username..." />
+          <button class="gh-btn" onclick="searchGitHub()">Search</button>
+        </div>
+        <div class="gh-result" id="ghResult">
+          <div class="gh-message">↑ Enter a username to begin</div>
+        </div>
+
+        <!-- Recent Repos -->
+        <div id="reposSection" style="display:none; margin-top:1.2rem;">
+          <div class="repos-section-label">Top Repositories</div>
+          <div id="reposList"></div>
+        </div>
+      </div>
+
+      <!-- Stats Panel -->
+      <div class="github-stats-panel">
+        <div class="placeholder-msg" id="ghPlaceholder">
+          <svg width="36" height="36" viewBox="0 0 32 32" fill="#5A5040">
+            <path d="M16 0C7.16 0 0 7.16 0 16c0 7.08 4.58 13.06 10.94 15.18.8.14 1.1-.34
+            1.1-.76 0-.38-.02-1.64-.02-2.98-4.02.74-5.06-.98-5.38-1.88-.18-.46-.96-1.88
+            -1.64-2.26-.56-.3-1.36-1.04-.02-1.06 1.26-.02 2.16 1.16 2.46 1.64 1.44 2.42
+            3.74 1.74 4.66 1.32.14-1.04.56-1.74 1.02-2.14-3.56-.4-7.28-1.78-7.28-7.9
+            0-1.74.62-3.18 1.64-4.3-.16-.4-.72-2.04.16-4.24 0 0 1.34-.42 4.4 1.64
+            1.28-.36 2.64-.54 4-.54 1.36 0 2.72.18 4 .54 3.06-2.08 4.4-1.64 4.4-1.64
+            .88 2.2.32 3.84.16 4.24 1.02 1.12 1.64 2.54 1.64 4.3 0 6.14-3.74 7.5-7.3
+            7.9.58.5 1.08 1.46 1.08 2.96 0 2.14-.02 3.86-.02 4.4 0 .42.3.92 1.1.76
+            C27.42 29.06 32 23.06 32 16c0-8.84-7.16-16-16-16z"/>
+          </svg>
+          <span>Search a gladiator to view their stats</span>
+        </div>
+
+        <div id="ghStats" style="display:none;">
+          <div class="profile-header">
+            <img id="ghAvatar" class="profile-avatar-big" src="" alt="avatar" onerror="this.style.display='none'"/>
+            <div>
+              <div class="profile-name" id="ghName"></div>
+              <div class="profile-bio" id="ghBio"></div>
+              <div style="margin-top:4px;">
+                <a id="ghProfileLink" href="#" target="_blank"
+                   style="font-size:0.72rem; color:var(--gold-dim); text-decoration:none; letter-spacing:0.06em; text-transform:uppercase;">
+                  View on GitHub ↗
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="stat-grid">
+            <div class="stat-box">
+              <div class="stat-box-num" id="ghRepos">—</div>
+              <div class="stat-box-label">Public Repos</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-num" id="ghFollowers">—</div>
+              <div class="stat-box-label">Followers</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-box-num" id="ghGists">—</div>
+              <div class="stat-box-label">Gists</div>
+            </div>
+            <div class="stat-box" style="background:rgba(201,147,58,0.08); border-color:var(--gold-dim);">
+              <div class="stat-box-num" id="ghPower">—</div>
+              <div class="stat-box-label" style="color:var(--gold-dim);">Battle Power</div>
+            </div>
+          </div>
+
+          <div class="lang-section" id="langSection" style="display:none;">
+            <div class="lang-section-label">Top Languages</div>
+            <div id="langBars"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     COMPETITIONS
+═══════════════════════════════════════════ -->
+<section id="competitions">
+  <p class="section-tag">Active Battles</p>
+  <h2 class="section-title">Enter the <span>Arena</span></h2>
+  <p class="section-desc">Live and upcoming competitions — claim your glory before the gates close.</p>
+
+  <div class="competitions-grid">
+    <div class="comp-card">
+      <span class="comp-badge badge-live">● Live</span>
+      <div class="comp-prize">₹50,000</div>
+      <div class="comp-title">Winter Code Wars 2025</div>
+      <div class="comp-org">IIT Delhi × Colosseum</div>
+      <div class="comp-meta">
+        <span class="comp-meta-item">
+          <svg width="12" height="12" fill="none" stroke="#9A8E78" stroke-width="1.5" viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v3l2 2"/></svg>
+          2 days left
+        </span>
+        <span class="comp-meta-item">Teams of 1–4</span>
+        <span class="comp-meta-item">1,240 registered</span>
+      </div>
+    </div>
+    <div class="comp-card">
+      <span class="comp-badge badge-upcoming">Upcoming</span>
+      <div class="comp-prize">₹1,00,000</div>
+      <div class="comp-title">The Grand Hackathon — Season 1</div>
+      <div class="comp-org">Colosseum Official</div>
+      <div class="comp-meta">
+        <span class="comp-meta-item">Starts Jan 15</span>
+        <span class="comp-meta-item">48 hours</span>
+        <span class="comp-meta-item">Open to all</span>
+      </div>
+    </div>
+    <div class="comp-card">
+      <span class="comp-badge badge-open">Open</span>
+      <div class="comp-prize">₹15,000</div>
+      <div class="comp-title">UI/UX Design Duel</div>
+      <div class="comp-org">NSUT × Figma India</div>
+      <div class="comp-meta">
+        <span class="comp-meta-item">5 days left</span>
+        <span class="comp-meta-item">Solo only</span>
+        <span class="comp-meta-item">342 registered</span>
+      </div>
+    </div>
+    <div class="comp-card">
+      <span class="comp-badge badge-live">● Live</span>
+      <div class="comp-prize">₹25,000</div>
+      <div class="comp-title">Data Science Gladiators Cup</div>
+      <div class="comp-org">BITS Pilani × Kaggle</div>
+      <div class="comp-meta">
+        <span class="comp-meta-item">1 day left</span>
+        <span class="comp-meta-item">Solo or duo</span>
+        <span class="comp-meta-item">580 registered</span>
+      </div>
+    </div>
+    <div class="comp-card">
+      <span class="comp-badge badge-upcoming">Upcoming</span>
+      <div class="comp-prize">₹40,000</div>
+      <div class="comp-title">Blockchain Battle Royale</div>
+      <div class="comp-org">IIM Ahmedabad × Web3 India</div>
+      <div class="comp-meta">
+        <span class="comp-meta-item">Starts Feb 1</span>
+        <span class="comp-meta-item">72 hours</span>
+        <span class="comp-meta-item">Teams of 2–5</span>
+      </div>
+    </div>
+    <div class="comp-card">
+      <span class="comp-badge badge-open">Open</span>
+      <div class="comp-prize">₹10,000</div>
+      <div class="comp-title">Open Source Sprint Challenge</div>
+      <div class="comp-org">GitHub India × Colosseum</div>
+      <div class="comp-meta">
+        <span class="comp-meta-item">10 days left</span>
+        <span class="comp-meta-item">Solo only</span>
+        <span class="comp-meta-item">890 registered</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     LEADERBOARD
+═══════════════════════════════════════════ -->
+<div class="leaderboard-section" id="leaderboard">
+  <div class="leaderboard-inner">
+    <p class="section-tag" style="justify-content:center;">Hall of Fame</p>
+    <h2 class="section-title">Top <span>Gladiators</span></h2>
+    <p class="section-desc">The warriors who stand above all others this season.</p>
+
+    <table class="lb-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Warrior</th>
+          <th style="text-align:center;">Wins</th>
+          <th style="text-align:right;">Battle Power</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="lb-rank gold">I</td>
+          <td>
+            <div class="lb-user">
+              <div class="lb-avatar" style="background:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:0.7rem;color:var(--gold);">AK</div>
+              <div>
+                <div class="lb-username">aryankumar</div>
+                <div class="lb-college">IIT Bombay</div>
+              </div>
+            </div>
+          </td>
+          <td class="lb-wins">14</td>
+          <td class="lb-power">9,840</td>
+        </tr>
+        <tr>
+          <td class="lb-rank silver">II</td>
+          <td>
+            <div class="lb-user">
+              <div class="lb-avatar" style="background:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:0.7rem;color:var(--gold);">PV</div>
+              <div>
+                <div class="lb-username">priyaverma</div>
+                <div class="lb-college">NIT Trichy</div>
+              </div>
+            </div>
+          </td>
+          <td class="lb-wins">12</td>
+          <td class="lb-power">8,210</td>
+        </tr>
+        <tr>
+          <td class="lb-rank bronze">III</td>
+          <td>
+            <div class="lb-user">
+              <div class="lb-avatar" style="background:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:0.7rem;color:var(--gold);">RS</div>
+              <div>
+                <div class="lb-username">rohansharma</div>
+                <div class="lb-college">BITS Pilani</div>
+              </div>
+            </div>
+          </td>
+          <td class="lb-wins">11</td>
+          <td class="lb-power">7,650</td>
+        </tr>
+        <tr>
+          <td class="lb-rank">IV</td>
+          <td>
+            <div class="lb-user">
+              <div class="lb-avatar" style="background:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:0.7rem;color:var(--gold);">MG</div>
+              <div>
+                <div class="lb-username">mehak_g</div>
+                <div class="lb-college">DTU Delhi</div>
+              </div>
+            </div>
+          </td>
+          <td class="lb-wins">9</td>
+          <td class="lb-power">6,980</td>
+        </tr>
+        <tr>
+          <td class="lb-rank">V</td>
+          <td>
+            <div class="lb-user">
+              <div class="lb-avatar" style="background:var(--surface);display:flex;align-items:center;justify-content:center;font-family:'Cinzel',serif;font-size:0.7rem;color:var(--gold);">SP</div>
+              <div>
+                <div class="lb-username">siddharth_p</div>
+                <div class="lb-college">VIT Vellore</div>
+              </div>
+            </div>
+          </td>
+          <td class="lb-wins">8</td>
+          <td class="lb-power">6,120</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     CTA
+═══════════════════════════════════════════ -->
+<div class="cta-section" id="cta">
+  <div class="cta-inner">
+    <div class="cta-corner tl"></div>
+    <div class="cta-corner tr"></div>
+    <div class="cta-corner bl"></div>
+    <div class="cta-corner br"></div>
+    <h2 class="cta-title">Ready to Become a <span>Legend?</span></h2>
+    <p class="cta-desc">
+      Join thousands of students who compete, grow, and get noticed by top companies —
+      all in one arena. Your GitHub is your gladius. Enter now.
+    </p>
+    <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap;">
+      <button class="btn-primary">Create Your Profile</button>
+      <button class="btn-ghost">Browse All Battles →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer>
+  <div class="footer-logo">Colosseum</div>
+  <ul class="footer-links">
+    <li><a href="#">About</a></li>
+    <li><a href="#">Compete</a></li>
+    <li><a href="#">Host a Battle</a></li>
+    <li><a href="#">For Colleges</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <div class="footer-copy">© 2025 Colosseum. Built for glory.</div>
+</footer>
+
+<!-- ═══════════════════════════════════════════
+     GITHUB API JAVASCRIPT
+═══════════════════════════════════════════ -->
+<script>
+  const ghInput = document.getElementById('ghInput');
+  ghInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') searchGitHub();
+  });
+
+  async function searchGitHub() {
+    const username = ghInput.value.trim();
+    if (!username) return;
+
+    const resultEl = document.getElementById('ghResult');
+    const reposSection = document.getElementById('reposSection');
+    resultEl.innerHTML = '<div class="gh-message">Summoning warrior...</div>';
+    reposSection.style.display = 'none';
+    document.getElementById('ghPlaceholder').style.display = 'flex';
+    document.getElementById('ghStats').style.display = 'none';
+
+    try {
+      const res = await fetch(`https://api.github.com/users/${encodeURIComponent(username)}`);
+      if (!res.ok) {
+        if (res.status === 404) throw new Error('Warrior not found in the scrolls.');
+        if (res.status === 403) throw new Error('GitHub rate limit reached. Try again later.');
+        throw new Error(`GitHub API error: ${res.status}`);
+      }
+      const user = await res.json();
+      renderUserCard(user);
+      renderUserStats(user);
+      fetchRepos(username);
+    } catch (err) {
+      resultEl.innerHTML = `<div class="gh-error">${err.message}</div>`;
+    }
+  }
+
+  function renderUserCard(user) {
+    const resultEl = document.getElementById('ghResult');
+    resultEl.innerHTML = `
+      <a class="gh-card" href="${user.html_url}" target="_blank" rel="noopener">
+        <img class="gh-avatar-sm" src="${user.avatar_url}" alt="${user.login}" onerror="this.style.display='none'"/>
+        <div class="gh-info">
+          <div class="gh-name-sm">${user.name || user.login}</div>
+          <div class="gh-meta-sm">@${user.login}${user.location ? ' · ' + user.location : ''}</div>
+        </div>
+        <div class="gh-repos-sm">${user.public_repos} repos</div>
+      </a>
+    `;
+  }
+
+  function renderUserStats(user) {
+    document.getElementById('ghPlaceholder').style.display = 'none';
+    document.getElementById('ghStats').style.display = 'block';
+
+    document.getElementById('ghAvatar').src = user.avatar_url;
+    document.getElementById('ghName').textContent = user.name || user.login;
+    document.getElementById('ghBio').textContent = user.bio || `@${user.login}`;
+    document.getElementById('ghProfileLink').href = user.html_url;
+    document.getElementById('ghRepos').textContent = user.public_repos;
+    document.getElementById('ghFollowers').textContent = user.followers;
+    document.getElementById('ghGists').textContent = user.public_gists || 0;
+
+    // Battle Power formula
+    const power = Math.min(9999, Math.round(
+      user.public_repos * 12 +
+      user.followers * 5 +
+      (user.public_gists || 0) * 3 +
+      (user.following || 0) * 1
+    ));
+    document.getElementById('ghPower').textContent = power.toLocaleString('en-IN');
+  }
+
+  async function fetchRepos(username) {
+    try {
+      const res = await fetch(
+        `https://api.github.com/users/${encodeURIComponent(username)}/repos?sort=updated&per_page=20`
+      );
+      if (!res.ok) return;
+      const repos = await res.json();
+
+      // Language stats
+      const langCount = {};
+      repos.forEach(r => {
+        if (r.language) langCount[r.language] = (langCount[r.language] || 0) + 1;
+      });
+      const sortedLangs = Object.entries(langCount).sort((a, b) => b[1] - a[1]).slice(0, 4);
+      const total = sortedLangs.reduce((s, [, v]) => s + v, 0);
+
+      if (sortedLangs.length > 0) {
+        const langSection = document.getElementById('langSection');
+        const langBars = document.getElementById('langBars');
+        langSection.style.display = 'block';
+        langBars.innerHTML = sortedLangs.map(([lang, count]) => {
+          const pct = Math.round((count / total) * 100);
+          return `
+            <div class="lang-bar">
+              <div class="lang-bar-label"><span>${lang}</span><span>${pct}%</span></div>
+              <div class="lang-bar-track">
+                <div class="lang-bar-fill" style="width:0%;" data-pct="${pct}"></div>
+              </div>
+            </div>`;
+        }).join('');
+
+        // Animate bars after render
+        requestAnimationFrame(() => {
+          document.querySelectorAll('.lang-bar-fill').forEach(el => {
+            el.style.width = el.dataset.pct + '%';
+          });
+        });
+      }
+
+      // Top repos by stars
+      const topRepos = repos
+        .sort((a, b) => b.stargazers_count - a.stargazers_count)
+        .slice(0, 5);
+
+      const reposSection = document.getElementById('reposSection');
+      const reposList = document.getElementById('reposList');
+      reposSection.style.display = 'block';
+      reposList.innerHTML = topRepos.map(r => `
+        <div class="repo-item">
+          <a class="repo-name" href="${r.html_url}" target="_blank" rel="noopener"
+             title="${r.name}">${r.name}</a>
+          <span class="repo-stars">★ ${r.stargazers_count}</span>
+        </div>
+      `).join('');
+    } catch (_) {
+      // Silently fail — repos are bonus data
+    }
+  }
+</script>
+
+</body>
+</html>
