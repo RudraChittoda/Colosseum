@@ -1,87 +1,108 @@
-const btn = document.getElementById("btn");
-const results = document.getElementById("results");
+const ghInput = document.getElementById('ghInput');
+const resultEl = document.getElementById('ghResult');
+const reposSection = document.getElementById('reposSection');
 
-btn.addEventListener("click", fetchData);
-
-function fetchData() {
-  const query = document.getElementById("search").value;
-
-  if (!query) {
-    results.innerHTML = "Please enter a search term";
-    return;
+ghInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    searchGitHub();
   }
+});
 
-  // Loading state
-  results.innerHTML = "Loading...";
 
-  fetch(`https://api.github.com/search/repositories?q=${query}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Failed to fetch data");
-      }
-      return response.json();
-    })
-    .then(data => {
-      displayData(data.items);
-    })
-    .catch(error => {
-      results.innerHTML = "Error fetching data";
-      console.log(error);
-    });
-}
+async function searchGitHub() {
+  const username = ghInput.value.trim();
+  if (!username) return;
 
-function displayData(repos) {
-  results.innerHTML = "";
-
-  if (repos.length === 0) {
-    results.innerHTML = "No results found";
-    return;
-  }
-
-  repos.map(repo => {
-    const card = document.createElement("div");
-    card.className = "card";
-
-    card.innerHTML = `
-      <h3>${repo.name}</h3>
-      <p>⭐ Stars: ${repo.stargazers_count}</p>
-      <p>Language: ${repo.language || "N/A"}</p>
-      <a href="${repo.html_url}" target="_blank">View Repo</a>
-    `;
-
-    results.appendChild(card);
-  });
-}
-async function searchRepos() {
-  const query = document.getElementById("repoSearch").value.trim();
-  const container = document.getElementById("repoResults");
-
-  if (!query) return;
-
-  container.innerHTML = '<div class="gh-message">Searching battles...</div>';
+  showLoading();
 
   try {
-    const res = await fetch(`https://api.github.com/search/repositories?q=${query}`);
+    const res = await fetch(`https://api.github.com/users/${username}`);
 
-    if (!res.ok) throw new Error("Failed to fetch repositories");
+    if (!res.ok) {
+      if (res.status === 404) throw new Error("User not found");
+      throw new Error("Something went wrong");
+    }
 
-    const data = await res.json();
+    const user = await res.json();
 
-    displayRepos(data.items);
+    renderUserCard(user);
+    renderUserStats(user);
 
-  } catch (err) {
-    container.innerHTML = `<div class="gh-error">${err.message}</div>`;
+    fetchRepos(username);
+
+  } catch (error) {
+    showError(error.message);
   }
 }
-function displayRepos(repos) {
-  const container = document.getElementById("repoResults");
 
-  if (!repos.length) {
-    container.innerHTML = "No battles found";
-    return;
+function showLoading() {
+  resultEl.innerHTML = `<div class="gh-message">Loading...</div>`;
+  reposSection.style.display = "none";
+}
+
+function showError(message) {
+  resultEl.innerHTML = `<div class="gh-error">${message}</div>`;
+}
+
+
+function renderUserCard(user) {
+  resultEl.innerHTML = `
+    <a class="gh-card" href="${user.html_url}" target="_blank">
+      <img class="gh-avatar-sm" src="${user.avatar_url}" />
+      <div class="gh-info">
+        <div class="gh-name-sm">${user.name || user.login}</div>
+        <div class="gh-meta-sm">@${user.login}</div>
+      </div>
+      <div class="gh-repos-sm">${user.public_repos} repos</div>
+    </a>
+  `;
+}
+
+
+function renderUserStats(user) {
+  document.getElementById('ghPlaceholder').style.display = "none";
+  document.getElementById('ghStats').style.display = "block";
+
+  document.getElementById('ghAvatar').src = user.avatar_url;
+  document.getElementById('ghName').textContent = user.name || user.login;
+  document.getElementById('ghBio').textContent = user.bio || "";
+  document.getElementById('ghProfileLink').href = user.html_url;
+
+  document.getElementById('ghRepos').textContent = user.public_repos;
+  document.getElementById('ghFollowers').textContent = user.followers;
+  document.getElementById('ghGists').textContent = user.public_gists || 0;
+
+  const power = user.public_repos + user.followers;
+  document.getElementById('ghPower').textContent = power;
+}
+
+async function fetchRepos(username) {
+  try {
+    const res = await fetch(
+      `https://api.github.com/users/${username}/repos`
+    );
+
+    const repos = await res.json();
+
+
+    const topRepos = repos
+      .filter(repo => !repo.fork) 
+      .sort((a, b) => b.stargazers_count - a.stargazers_count) 
+      .slice(0, 5);
+
+    renderRepos(topRepos);
+
+  } catch (error) {
+    console.log(error);
   }
+}
 
-  container.innerHTML = repos.map(repo => `
+function renderRepos(repos) {
+  reposSection.style.display = "block";
+
+  const reposList = document.getElementById('reposList');
+
+  reposList.innerHTML = repos.map(repo => `
     <div class="repo-item">
       <a class="repo-name" href="${repo.html_url}" target="_blank">
         ${repo.name}
@@ -90,14 +111,3 @@ function displayRepos(repos) {
     </div>
   `).join("");
 }
-const token = "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";
-
-fetch(`https://api.github.com/users/${username}`, {
-  headers: {
-    Authorization: `token ${token}`
-  }
-})
-.then(res => res.json())
-.then(data => {
-  console.log(data);
-});
